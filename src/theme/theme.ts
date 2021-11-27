@@ -1,5 +1,10 @@
 export const theme = {
-  colors: {},
+  colors: {
+    foreground: '#fff',
+    background: '#E9E8EA',
+    primary: '#F57D00',
+    accent: '#62B4B7',
+  },
   fontSize: {
     xl: '25px',
     l: '17px',
@@ -17,5 +22,8 @@ export const theme = {
   },
   borderRadius: {
     regular: '7px',
+  },
+  sidebar: {
+    width: '80px',
   },
 };
