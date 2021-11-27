@@ -3,7 +3,7 @@ export const theme = {
     foreground: '#fff',
     background: '#E9E8EA',
     primary: '#F57D00',
-    accent: '#62B4B7',
+    secondary: '#62B4B7',
   },
   fontSize: {
     xl: '25px',

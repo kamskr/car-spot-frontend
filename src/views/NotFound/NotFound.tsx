@@ -8,7 +8,7 @@ export const NotFound = () => {
       <NotFoundHeader>OOPS!</NotFoundHeader>
       <NotFoundText>We can&apos;t find the page you&apos;re looking for.</NotFoundText>
       <StyledLink to="/">
-        <Button text="Visit homepage" variant={ButtonVariant.secondary} reverseColors />
+        <Button text="Visit homepage" variant={ButtonVariant.primary} reverseColors />
       </StyledLink>
     </NotFoundWrapper>
   );

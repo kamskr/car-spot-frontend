@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from '@xstyled/styled-components';
 import { ButtonVariant } from './Button.types';
 
 export const Button = styled.button<{ variant: ButtonVariant; reverseColors?: boolean; disabled?: boolean }>`
@@ -59,7 +59,7 @@ export const Button = styled.button<{ variant: ButtonVariant; reverseColors?: bo
         &:hover:enabled {
           background-color: ${({ theme }) => (variant === ButtonVariant.primary ? theme.colors.primary : theme.colors.secondary)};
           border: 1px solid transparent;
-          color: ${({ theme }) => theme.colors.white};
+          color: foreground;
         }
       }
     `};
