@@ -61,9 +61,10 @@ export const SpotsMap = () => {
     setActiveAddress(null);
   }, [parkingSpots, mapInstance]);
 
-  useEffect(() => {}, [activeAddress]);
-
-  useEffect(() => {}, [mapInstance]);
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log(activeAddress);
+  }, [activeAddress]);
 
   if (!isLoaded) {
     return <LoadingIndicator />;
@@ -76,7 +77,6 @@ export const SpotsMap = () => {
 
   return (
     <>
-      <p>Map should be here</p>
       <GoogleMap
         options={{
           streetViewControl: false,
@@ -105,12 +105,12 @@ export const SpotsMap = () => {
                     onClick={() => {
                       setActiveAddress(spot);
 
-                      scroller.scrollTo(spot.id, {
-                        smooth: true,
-                        containerId: 'parking-spot',
-                        offset: -10,
-                        duration: 220,
-                      });
+                      // scroller.scrollTo(spot.id, {
+                      //   smooth: true,
+                      //   containerId: 'parking-spot',
+                      //   offset: -10,
+                      //   duration: 220,
+                      // });
                     }}
                   />
                 );
