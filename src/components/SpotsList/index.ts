@@ -1,0 +1,1 @@
+export { SpotsList } from './SpotsList';
