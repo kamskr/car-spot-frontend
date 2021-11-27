@@ -17,10 +17,6 @@ export const AppBar = ({ openDrawer }: Props) => {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleChange = (event: any) => {
-    setAuth(event.target.checked);
-  };
-
   const handleMenu = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
@@ -37,7 +33,7 @@ export const AppBar = ({ openDrawer }: Props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Photos
+            CarSpot
           </Typography>
           {auth && (
             <div>
