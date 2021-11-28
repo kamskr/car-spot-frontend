@@ -1,11 +1,10 @@
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 export const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: background;
   display: flex;
   justify-content: center;
-  width: 100vw;
-  height: 100vh;
+  left: ${({ theme }) => theme.sidebar.width};
   padding: 0 10px;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
