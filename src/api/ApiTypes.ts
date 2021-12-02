@@ -1,4 +1,9 @@
-export interface CarSpotAPI {}
+import { ParkingSpot } from 'api/models';
+
+export interface CarSpotAPI {
+  // parking-spots
+  getParkingSpots(): Promise<ParkingSpot[]>;
+}
 
 export interface ApiError {
   content: string;

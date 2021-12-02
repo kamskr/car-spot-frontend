@@ -6,42 +6,14 @@ import { ParkingSpot } from 'api/models';
 import { useGoogleMapsContext } from 'contexts/GoogleMapsContext';
 
 import { LoadingIndicator } from 'components/LoadingIndicator';
+import { api } from 'api';
+import useApiRequest from 'hooks/useApiRequest';
 
 const mapContainerStyle: CSSProperties = {
   width: '100%',
   height: '100%',
   position: 'relative',
 };
-
-const parkingSpotsTemp: ParkingSpot[] = [
-  {
-    id: 'qewqeqwrqgeqwge',
-    dateStart: new Date(),
-    lat: 52.229676,
-    lng: 21.012229,
-    allowContact: true,
-    user: { name: 'Kamil', surname: 'Sikora', username: 'kamilsikora', email: 'kamilsikora@email.te', confirmed: true, blocked: false },
-    car: { brand: 'BMW', model: 'XM22', color: 'Black', registrationNumber: 'WWL 6231D' },
-  },
-  {
-    id: 'qewqeqwrqgeasdqwge',
-    dateStart: new Date(),
-    lat: 62.229676,
-    lng: 21.012229,
-    allowContact: true,
-    user: { name: 'Kamil', surname: 'Sikora', username: 'kamilsikora', email: 'kamilsikora@email.te', confirmed: true, blocked: false },
-    car: { brand: 'BMW', model: 'XM22', color: 'Black', registrationNumber: 'WWL 6231D' },
-  },
-  {
-    id: 'qewqeqwrqgasdeqwge',
-    dateStart: new Date(),
-    lat: 52.229676,
-    lng: 31.012229,
-    allowContact: true,
-    user: { name: 'Kamil', surname: 'Sikora', username: 'kamilsikora', email: 'kamilsikora@email.te', confirmed: true, blocked: false },
-    car: { brand: 'BMW', model: 'XM22', color: 'Black', registrationNumber: 'WWL 6231D' },
-  },
-];
 
 interface Props {
   parkingSpots?: ParkingSpot[];
@@ -50,8 +22,18 @@ interface Props {
 export const SpotsMap = () => {
   const [activeAddress, setActiveAddress] = useState<ParkingSpot | null>(null);
   const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
-  const parkingSpots = parkingSpotsTemp;
+  const [parkingSpots, setParkingSpots] = useState<ParkingSpot[] | null>(null);
   const { isLoaded } = useGoogleMapsContext();
+  const request = useApiRequest();
+
+  const fetchParkingSpots = async () => {
+    const parkingSpotsFetched = await request.dispatch(api.getParkingSpots());
+    setParkingSpots(parkingSpotsFetched);
+  };
+
+  useEffect(() => {
+    fetchParkingSpots();
+  }, []);
 
   useEffect(() => {
     if (!mapInstance) {
@@ -98,8 +80,8 @@ export const SpotsMap = () => {
                   <Marker
                     key={spot.id}
                     position={{
-                      lat: spot.lat,
-                      lng: spot.lng,
+                      lat: spot.position.lat,
+                      lng: spot.position.lng,
                     }}
                     clusterer={clusterer}
                     onClick={() => {

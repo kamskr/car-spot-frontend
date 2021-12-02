@@ -5,4 +5,6 @@ export interface User {
   email: string;
   confirmed: boolean;
   blocked: boolean;
+  cars: string[];
+  parkingSpots: string[];
 }

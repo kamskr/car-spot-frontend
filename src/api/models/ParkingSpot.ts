@@ -1,11 +1,11 @@
+import { Position } from 'api/models/Position';
 import { User, Car } from '.';
 
 export interface ParkingSpot {
   id: string;
   dateStart: Date;
   dateEnd?: Date;
-  lat: number;
-  lng: number;
+  position: Position;
   allowContact: boolean;
   user: User;
   car: Car;
