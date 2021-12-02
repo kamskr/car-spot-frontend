@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useCallback, useMemo, ReactNode } from 'react';
-import { useLoadScript } from '@react-google-maps/api';
+import { useJsApiLoader, useLoadScript } from '@react-google-maps/api';
 
 // https://developers.google.com/maps/documentation/javascript/reference/geocoder
 
@@ -16,7 +16,8 @@ interface Props {
 export const GoogleMapsProvider = ({ children }: Props) => {
   const googleMapsApiKey = process.env.REACT_APP_GOOGLE_API_KEY || '';
 
-  const { isLoaded } = useLoadScript({
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
     googleMapsApiKey,
   });
 
