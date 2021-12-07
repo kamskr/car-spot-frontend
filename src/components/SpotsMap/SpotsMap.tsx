@@ -4,26 +4,21 @@ import { GoogleMap, Marker, MarkerClusterer, LoadScript } from '@react-google-ma
 import { scroller } from 'react-scroll';
 import { ParkingSpot } from 'api/models';
 import { useGoogleMapsContext } from 'contexts/GoogleMapsContext';
-
-import { LoadingIndicator } from 'components/LoadingIndicator';
 import { api } from 'api';
 import useApiRequest from 'hooks/useApiRequest';
+
+import { LoadingIndicator } from 'components/LoadingIndicator';
 
 const mapContainerStyle: CSSProperties = {
   width: '100%',
   height: '100%',
   position: 'relative',
 };
-
-interface Props {
-  parkingSpots?: ParkingSpot[];
-}
-
 export const SpotsMap = () => {
   const [activeAddress, setActiveAddress] = useState<ParkingSpot | null>(null);
   const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
-  const [parkingSpots, setParkingSpots] = useState<ParkingSpot[] | null>(null);
   const { isLoaded } = useGoogleMapsContext();
+  const [parkingSpots, setParkingSpots] = useState<ParkingSpot[] | null>(null);
   const request = useApiRequest();
 
   const fetchParkingSpots = async () => {
