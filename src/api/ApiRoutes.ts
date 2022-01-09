@@ -1,8 +1,10 @@
 export class ApiRoutes {
   // Authentication
-  static register = '/auth/local/register';
+  static userProfileRoute = '/users/me';
 
-  static login = '/auth/local/login';
+  static registerRoute = '/auth/local/register';
+
+  static loginRoute = '/auth/local/login';
 
   // parking-spots
   static parkingSpotsRoute = '/parking-spots';

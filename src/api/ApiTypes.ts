@@ -1,7 +1,8 @@
-import { ParkingSpot, Token, RegisterUserDTO, LoginUserDTO } from 'api/models';
+import { ParkingSpot, Token, RegisterUserDTO, LoginUserDTO, User } from 'api/models';
 
 export interface CarSpotAPI {
   // Authentication
+  getUser(): Promise<User>;
   register(userCredentials: RegisterUserDTO): Promise<Token>;
   login(userCredentials: LoginUserDTO): Promise<Token>;
 
