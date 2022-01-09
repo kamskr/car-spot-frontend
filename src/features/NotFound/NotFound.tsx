@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Typography } from '@mui/material';
-import { NotFoundWrapper, StyledLink } from 'views/NotFound/NotFound.styled';
+import { NotFoundWrapper, StyledLink } from 'features/NotFound/NotFound.styled';
 
 export const NotFound = () => {
   return (

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Root } from 'views/Root';
+import { App } from 'features/App';
 import 'theme/fonts.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root />
+    <App />
   </React.StrictMode>,
   document.getElementById('root'),
 );
