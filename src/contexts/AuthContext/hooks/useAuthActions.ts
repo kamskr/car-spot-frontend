@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
   const [isInitialized, setIsInitialized] = useState(false);
-  console.log('test');
+
   const getUserData = async () => {
     try {
       const userProfile = await api.getUser();
@@ -28,7 +28,6 @@ export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
   };
 
   const checkAuthentication = async () => {
-    console.log('hello');
     const { token } = getAuthTokens();
 
     if (token && isTokenValid(token)) {
@@ -79,7 +78,6 @@ export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
   };
 
   useEffect(() => {
-    console.log('init');
     checkAuthentication();
   }, []);
 

@@ -1,5 +1,4 @@
-import { ParkingSpot, RegisterUserDTO, AuthTokens, User } from 'api/models';
-import { LoginUserDTO } from 'api/models/dtos/auth/User';
+import { ParkingSpot, RegisterUserDTO, LoginUserDTO, AuthTokens, User } from 'api/models';
 import { ApiRoutes } from './ApiRoutes';
 import { CarSpotAPI, PaginatedData } from './ApiTypes';
 import { HttpClient } from './HttpClient';
