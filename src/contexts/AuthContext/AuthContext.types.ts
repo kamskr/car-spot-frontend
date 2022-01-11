@@ -1,4 +1,4 @@
-import { User } from 'api/models';
+import { LoginUserDTO, RegisterUserDTO, User } from 'api/models';
 
 export interface AuthenticationState {
   isAuthenticated: boolean;
@@ -8,7 +8,7 @@ export interface AuthContextProps {
   isInitialized: boolean;
   isAuthenticated: boolean;
   user?: User;
-  login: (username: string, password: string) => Promise<void>;
-  register: (code: string) => Promise<void>;
+  login: (userCredentials: LoginUserDTO) => Promise<(dispatch: any) => Promise<void>>;
+  register: (userCredentials: RegisterUserDTO) => Promise<(dispatch: any) => Promise<void>>;
   logout: () => Promise<void>;
 }

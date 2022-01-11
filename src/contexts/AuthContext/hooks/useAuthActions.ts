@@ -52,11 +52,11 @@ export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
     };
   }, []);
 
-  const register = useCallback(async (userCredentials: RegisterUserDTO) => {
+  const register = useCallback(async (userCredentials: RegisterUserDTO): Promise<(dispatch: any) => Promise<void>> => {
     return createLoginAction(() => api.register(userCredentials));
   }, []);
 
-  const login = useCallback(async (userCredentials: LoginUserDTO) => {
+  const login = useCallback(async (userCredentials: LoginUserDTO): Promise<(dispatch: any) => Promise<void>> => {
     return createLoginAction(() => api.login(userCredentials));
   }, []);
 
