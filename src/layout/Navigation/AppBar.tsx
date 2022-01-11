@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const AppBar = ({ openDrawer }: Props) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenu = (event: any) => {
@@ -67,7 +67,7 @@ export const AppBar = ({ openDrawer }: Props) => {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
             </div>
           ) : (

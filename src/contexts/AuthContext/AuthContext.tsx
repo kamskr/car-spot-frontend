@@ -13,6 +13,7 @@ export const AuthProvider: FC = ({ children }) => {
       value={{
         isInitialized,
         isAuthenticated: authState.isAuthenticated,
+        isLoading: authState.isLoading,
         user: authState.user,
         register,
         login,

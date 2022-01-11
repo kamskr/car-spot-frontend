@@ -1,8 +1,9 @@
 import { api } from 'api';
 import { LoginUserDTO, RegisterUserDTO, AuthTokens } from 'api/models';
 import { clearAuthTokens, getAuthTokens, isTokenValid, setAuthTokens } from 'contexts/AuthContext/AuthContext.helpers';
-import { CLEAR_STATE, SET_USER } from 'contexts/AuthContext/AuthContext.state';
+import { CLEAR_STATE, SET_IS_LOADING, SET_USER } from 'contexts/AuthContext/AuthContext.state';
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { setTimeout } from 'timers';
 
 export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -21,6 +22,10 @@ export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
       console.log(err);
       logout();
     }
+    dispatch({
+      type: SET_IS_LOADING,
+      payload: false,
+    });
   };
 
   const checkAuthentication = async () => {
@@ -29,25 +34,34 @@ export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
     if (token && isTokenValid(token)) {
       api.setAuthToken(token);
       dispatch(getUserData());
-    } else if (refresh && isTokenValid(refresh)) {
-      const data = await api.refreshToken(refresh);
-      dispatch(finalizeLogin(data));
     }
     setTimeout(() => setIsInitialized(true), 0);
   };
 
-  const finalizeLogin = async (authTokens: AuthTokens) => {
-    setAuthTokens(authTokens);
+  const finalizeLogin = async (token: string) => {
+    setAuthTokens(token);
     await getUserData();
   };
 
-  const performLoginAction = async (performLogin: () => Promise<AuthTokens>) => {
-    const response = await performLogin();
+  const performLoginAction = async (performLogin: () => Promise<string>) => {
+    try {
+      dispatch({
+        type: SET_IS_LOADING,
+        payload: true,
+      });
+      const token = await performLogin();
 
-    if (response.token) {
-      const data = response as AuthTokens;
-      await dispatch(finalizeLogin(data));
+      if (token) {
+        await finalizeLogin(token);
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
     }
+    dispatch({
+      type: SET_IS_LOADING,
+      payload: false,
+    });
   };
 
   const register = async (userCredentials: RegisterUserDTO): Promise<void> => {

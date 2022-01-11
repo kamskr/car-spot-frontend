@@ -4,7 +4,7 @@ export class ApiRoutes {
 
   static registerRoute = '/auth/local/register';
 
-  static loginRoute = '/auth/local/login';
+  static loginRoute = '/auth/local';
 
   static refreshTokenRoute = 'auth/refreshToken';
 

@@ -11,10 +11,9 @@ export const clearAuthTokens = () => {
   api.clearAuthToken();
 };
 
-export const setAuthTokens = (pair: AuthTokens) => {
-  setStorageItem(tokenStorageKey, pair.token);
-  setStorageItem(refreshStorageKey, pair.refresh_token);
-  api.setAuthToken(pair.token);
+export const setAuthTokens = (token: string) => {
+  setStorageItem(tokenStorageKey, token);
+  api.setAuthToken(token);
 };
 
 export const getAuthTokens = () => {

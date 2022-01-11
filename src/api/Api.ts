@@ -12,7 +12,7 @@ export class Api implements CarSpotAPI {
   }
 
   setAuthToken(token: string): void {
-    this.client.setCommonHeader('Authorization', token);
+    this.client.setCommonHeader('Authorization', `Bearer ${token}`);
   }
 
   clearAuthToken(): void {
@@ -29,14 +29,14 @@ export class Api implements CarSpotAPI {
     return res.data;
   }
 
-  async register(userCredentials: RegisterUserDTO): Promise<AuthTokens> {
+  async register(userCredentials: RegisterUserDTO): Promise<any> {
     const response = await this.client.post(ApiRoutes.registerRoute, userCredentials);
 
     return response.data.jwt;
   }
 
-  async login(userCredentials: LoginUserDTO): Promise<AuthTokens> {
-    const response = await this.client.post('https://localhost:1337/api/auth/local', userCredentials);
+  async login(userCredentials: LoginUserDTO): Promise<any> {
+    const response = await this.client.post(ApiRoutes.loginRoute, userCredentials);
 
     return response.data.jwt;
   }

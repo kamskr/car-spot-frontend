@@ -15,6 +15,7 @@ export const WAIT_FOR_CONFIRMATION = 'WAIT_FOR_CONFIRMATION';
 export const CLEAR_CODES = 'CLEAR_CODES';
 export const CLEAR_STATE = 'CLEAR_STATE';
 export const GET_MFA_CODE = 'GET_MFA_CODE';
+export const SET_IS_LOADING = 'SET_IS_LOADING';
 
 /**
  * Initial state of the Authentication context.
@@ -22,6 +23,7 @@ export const GET_MFA_CODE = 'GET_MFA_CODE';
 export const initialState: AuthenticationState = {
   isAuthenticated: false,
   user: undefined,
+  isLoading: false,
 };
 
 export const authReducer = (state = initialState, action: any): AuthenticationState => {
@@ -37,7 +39,7 @@ export const authReducer = (state = initialState, action: any): AuthenticationSt
       return {
         ...state,
         isAuthenticated: true,
-        ...action.payload,
+        user: action.payload,
       };
     case UPDATE_USER:
       return {
@@ -47,6 +49,11 @@ export const authReducer = (state = initialState, action: any): AuthenticationSt
     case CLEAR_STATE:
       return {
         ...initialState,
+      };
+    case SET_IS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload,
       };
     default:
       return state;
