@@ -11,13 +11,14 @@ import Typography from '@mui/material/Typography';
 import { useAuth } from 'contexts';
 import { NavLink } from 'react-router-dom';
 import { routes } from 'routes';
+import { alignItems } from '@xstyled/styled-components';
 
 interface Props {
   openDrawer: () => void;
 }
 
 export const AppBar = ({ openDrawer }: Props) => {
-  const { isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenu = (event: any) => {
@@ -35,12 +36,17 @@ export const AppBar = ({ openDrawer }: Props) => {
           <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={openDrawer}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <Typography variant="h5" sx={{ flexGrow: 1 }}>
             CarSpot
           </Typography>
 
           {isAuthenticated ? (
-            <div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {user && (
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                  Hello {user.username}!
+                </Typography>
+              )}
               <IconButton
                 size="large"
                 aria-label="account of current user"
