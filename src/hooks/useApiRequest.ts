@@ -28,6 +28,7 @@ const useApiRequest = (): ApiRequest => {
       })
       .catch((error) => {
         try {
+          console.error(error);
           setErrors(error.response.data);
         } catch (e) {
           // eslint-disable-next-line no-console

@@ -36,7 +36,7 @@ export class Api implements CarSpotAPI {
   }
 
   async login(userCredentials: LoginUserDTO): Promise<AuthTokens> {
-    const response = await this.client.post(ApiRoutes.loginRoute, userCredentials);
+    const response = await this.client.post('https://localhost:1337/api/auth/local', userCredentials);
 
     return response.data.jwt;
   }

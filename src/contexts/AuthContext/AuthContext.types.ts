@@ -8,7 +8,7 @@ export interface AuthContextProps {
   isInitialized: boolean;
   isAuthenticated: boolean;
   user?: User;
-  login: (userCredentials: LoginUserDTO) => Promise<(dispatch: any) => Promise<void>>;
-  register: (userCredentials: RegisterUserDTO) => Promise<(dispatch: any) => Promise<void>>;
+  login: (userCredentials: LoginUserDTO) => Promise<void>;
+  register: (userCredentials: RegisterUserDTO) => Promise<void>;
   logout: () => Promise<void>;
 }
