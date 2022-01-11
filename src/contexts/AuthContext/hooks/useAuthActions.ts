@@ -1,6 +1,6 @@
 import { api } from 'api';
 import { LoginUserDTO, RegisterUserDTO, AuthTokens } from 'api/models';
-import { clearAuthTokens, getAuthTokens, setAuthTokens } from 'contexts/AuthContext/AuthContext.helpers';
+import { clearAuthTokens, getAuthTokens, isTokenValid, setAuthTokens } from 'contexts/AuthContext/AuthContext.helpers';
 import { CLEAR_STATE, SET_USER } from 'contexts/AuthContext/AuthContext.state';
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 
@@ -71,9 +71,3 @@ export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
 
   return { isInitialized, register, login, logout, checkAuthentication };
 };
-function tokenStorageKey(tokenStorageKey: any, tokenString: string) {
-  throw new Error('Function not implemented.');
-}
-function isTokenValid(refresh: string) {
-  throw new Error('Function not implemented.');
-}

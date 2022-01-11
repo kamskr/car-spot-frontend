@@ -24,7 +24,7 @@ export const getAuthTokens = () => {
   return { token, refresh };
 };
 
-const isTokenValid = (token: string) => {
+export const isTokenValid = (token: string) => {
   try {
     const decodedAccess = jwt_decode<{ exp: number }>(token);
     return decodedAccess.exp * 1000 >= Date.now();
