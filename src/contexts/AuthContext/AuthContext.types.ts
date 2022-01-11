@@ -1,6 +1,16 @@
+import { LoginUserDTO, RegisterUserDTO, User } from 'api/models';
+
+export interface AuthenticationState {
+  isAuthenticated: boolean;
+  user?: User;
+  isLoading: boolean;
+}
 export interface AuthContextProps {
-  authContextLoaded: boolean;
-  login: (username: string, password: string) => Promise<void>;
-  register: (code: string) => Promise<void>;
+  isInitialized: boolean;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  user?: User;
+  login: (userCredentials: LoginUserDTO) => Promise<void>;
+  register: (userCredentials: RegisterUserDTO) => Promise<void>;
   logout: () => Promise<void>;
 }

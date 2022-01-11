@@ -1,8 +1,12 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { GlobalProvider } from 'providers/GlobalProvider';
+import { Login } from 'features/Login';
+import { Register } from 'features/Register';
 import { SearchSpots } from 'features/SearchSpots';
 import { Navigation } from 'layout/Navigation/Navigation';
+import { GlobalProvider } from 'providers/GlobalProvider';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ProtectedRoute, UserStatus } from 'routes/ProtectedRoute';
+import { routes } from 'routes/routes';
 import { NotFound } from './NotFound';
 
 export const App = () => {
@@ -11,9 +15,15 @@ export const App = () => {
       <GlobalProvider>
         <Navigation />
         <Switch>
-          <Route exact path="/">
+          <Route exact path={routes.home}>
             <SearchSpots />
           </Route>
+          <ProtectedRoute allowIf={UserStatus.unauthenticated} redirectTo={routes.home} exact path={routes.login}>
+            <Login />
+          </ProtectedRoute>
+          <ProtectedRoute allowIf={UserStatus.unauthenticated} redirectTo={routes.home} exact path={routes.register}>
+            <Register />
+          </ProtectedRoute>
           <Route path="*">
             <NotFound />
           </Route>

@@ -3,7 +3,8 @@ import { ThemeProvider } from '@mui/material';
 import { GlobalStyle, theme } from 'theme';
 import { Route } from 'react-router-dom';
 import { QueryParamProvider } from 'use-query-params';
-import { GoogleMapsProvider } from 'contexts/GoogleMapsContext';
+import { AuthProvider, GoogleMapsProvider } from 'contexts';
+import { Bootstrap } from 'providers/Bootstrap';
 
 interface Props {
   children: ReactNode;
@@ -11,11 +12,13 @@ interface Props {
 
 export const GlobalProvider = ({ children }: Props) => (
   <QueryParamProvider ReactRouterRoute={Route}>
-    <GoogleMapsProvider>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        {children}
-      </ThemeProvider>
-    </GoogleMapsProvider>
+    <AuthProvider>
+      <GoogleMapsProvider>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Bootstrap>{children}</Bootstrap>
+        </ThemeProvider>
+      </GoogleMapsProvider>
+    </AuthProvider>
   </QueryParamProvider>
 );

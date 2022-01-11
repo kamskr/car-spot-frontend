@@ -42,6 +42,14 @@ export class HttpClient {
     return promise;
   }
 
+  setCommonHeader(key: string, value: string) {
+    axios.defaults.headers.common[key] = value;
+  }
+
+  deleteCommonHeader(key: string) {
+    delete axios.defaults.headers.common[key];
+  }
+
   private apiRoute(route: string): string {
     return `${this.apiRoot}${route}`;
   }

@@ -1,20 +1,24 @@
 import * as React from 'react';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuIcon from '@mui/icons-material/Menu';
 import MUIAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import { useAuth } from 'contexts';
+import { NavLink } from 'react-router-dom';
+import { routes } from 'routes/routes';
+import { alignItems } from '@xstyled/styled-components';
 
 interface Props {
   openDrawer: () => void;
 }
 
 export const AppBar = ({ openDrawer }: Props) => {
-  const [auth, setAuth] = React.useState(true);
+  const { user, isAuthenticated, logout } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenu = (event: any) => {
@@ -32,11 +36,17 @@ export const AppBar = ({ openDrawer }: Props) => {
           <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={openDrawer}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h5" sx={{ flexGrow: 1 }}>
             CarSpot
           </Typography>
-          {auth && (
-            <div>
+
+          {isAuthenticated ? (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {user && (
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                  Hello {user.username}!
+                </Typography>
+              )}
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -63,9 +73,13 @@ export const AppBar = ({ openDrawer }: Props) => {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
             </div>
+          ) : (
+            <MenuItem component={NavLink} to={routes.login}>
+              Login
+            </MenuItem>
           )}
         </Toolbar>
       </MUIAppBar>

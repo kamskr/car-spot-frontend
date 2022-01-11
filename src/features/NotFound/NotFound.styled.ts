@@ -1,5 +1,5 @@
 import styled from '@xstyled/styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const NotFoundWrapper = styled.div`
   position: fixed;
@@ -14,6 +14,6 @@ export const NotFoundWrapper = styled.div`
   justify-content: center;
 `;
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled(NavLink)`
   text-decoration: none;
 `;

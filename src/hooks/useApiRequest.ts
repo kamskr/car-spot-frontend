@@ -20,7 +20,6 @@ const useApiRequest = (): ApiRequest => {
     setErrors(undefined);
     setIsCompleted(false);
     setIsLoading(true);
-
     promise
       .then(() => {
         setIsCompleted(true);
@@ -28,6 +27,8 @@ const useApiRequest = (): ApiRequest => {
       })
       .catch((error) => {
         try {
+          // eslint-disable-next-line no-console
+          console.error(error);
           setErrors(error.response.data);
         } catch (e) {
           // eslint-disable-next-line no-console
