@@ -2,7 +2,7 @@ import React from 'react';
 import { ContentContainer } from 'layout/ContentContainer';
 import { Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import { routes } from 'routes';
+import { routes } from 'routes/routes';
 import { AuthContent } from './Login.styled';
 import { LoginForm } from './components';
 

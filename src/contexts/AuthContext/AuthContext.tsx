@@ -8,6 +8,7 @@ export const AuthContext = createContext<AuthContextProps>({} as AuthContextProp
 export const AuthProvider: FC = ({ children }) => {
   const [authState, dispatch] = useReducer(authReducer, initialState);
   const { isInitialized, register, login, logout } = useAuthActions(dispatch);
+  console.log('test');
   return (
     <AuthContext.Provider
       value={{

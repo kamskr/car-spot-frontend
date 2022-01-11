@@ -10,7 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useAuth } from 'contexts';
 import { NavLink } from 'react-router-dom';
-import { routes } from 'routes';
+import { routes } from 'routes/routes';
 import { alignItems } from '@xstyled/styled-components';
 
 interface Props {

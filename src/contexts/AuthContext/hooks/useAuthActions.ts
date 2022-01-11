@@ -2,12 +2,11 @@ import { api } from 'api';
 import { LoginUserDTO, RegisterUserDTO, AuthTokens } from 'api/models';
 import { clearAuthTokens, getAuthTokens, isTokenValid, setAuthTokens } from 'contexts/AuthContext/AuthContext.helpers';
 import { CLEAR_STATE, SET_IS_LOADING, SET_USER } from 'contexts/AuthContext/AuthContext.state';
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
-import { setTimeout } from 'timers';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
   const [isInitialized, setIsInitialized] = useState(false);
-
+  console.log('test');
   const getUserData = async () => {
     try {
       const userProfile = await api.getUser();
@@ -29,13 +28,16 @@ export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
   };
 
   const checkAuthentication = async () => {
-    const { token, refresh } = getAuthTokens();
+    console.log('hello');
+    const { token } = getAuthTokens();
 
     if (token && isTokenValid(token)) {
       api.setAuthToken(token);
-      dispatch(getUserData());
+      await dispatch(getUserData());
+      setIsInitialized(true);
+    } else {
+      setIsInitialized(true);
     }
-    setTimeout(() => setIsInitialized(true), 0);
   };
 
   const finalizeLogin = async (token: string) => {
@@ -77,6 +79,7 @@ export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
   };
 
   useEffect(() => {
+    console.log('init');
     checkAuthentication();
   }, []);
 

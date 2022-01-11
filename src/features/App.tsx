@@ -1,10 +1,13 @@
-import React from 'react';
+import { useAuth } from 'contexts';
+import { LoadingPage } from 'features/LoadingPage';
+import { Login } from 'features/Login';
 import { SearchSpots } from 'features/SearchSpots';
 import { Navigation } from 'layout/Navigation/Navigation';
 import { GlobalProvider } from 'providers/GlobalProvider';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { routes } from 'routes';
-import { Login } from 'features/Login';
+import { ProtectedRoute, UserStatus } from 'routes/ProtectedRoute';
+import { routes } from 'routes/routes';
 import { NotFound } from './NotFound';
 
 export const App = () => {
@@ -16,9 +19,9 @@ export const App = () => {
           <Route exact path={routes.home}>
             <SearchSpots />
           </Route>
-          <Route exact path={routes.login}>
+          <ProtectedRoute allowIf={UserStatus.unauthenticated} redirectTo={routes.home} exact path={routes.login}>
             <Login />
-          </Route>
+          </ProtectedRoute>
           <Route path="*">
             <NotFound />
           </Route>
