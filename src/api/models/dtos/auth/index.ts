@@ -1,2 +1,2 @@
 export * from './AuthTokens';
-export * from './User';
+export * from './UserData';
