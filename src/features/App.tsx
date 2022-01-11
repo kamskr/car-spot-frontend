@@ -1,6 +1,5 @@
-import { useAuth } from 'contexts';
-import { LoadingPage } from 'features/LoadingPage';
 import { Login } from 'features/Login';
+import { Register } from 'features/Register';
 import { SearchSpots } from 'features/SearchSpots';
 import { Navigation } from 'layout/Navigation/Navigation';
 import { GlobalProvider } from 'providers/GlobalProvider';
@@ -21,6 +20,9 @@ export const App = () => {
           </Route>
           <ProtectedRoute allowIf={UserStatus.unauthenticated} redirectTo={routes.home} exact path={routes.login}>
             <Login />
+          </ProtectedRoute>
+          <ProtectedRoute allowIf={UserStatus.unauthenticated} redirectTo={routes.home} exact path={routes.register}>
+            <Register />
           </ProtectedRoute>
           <Route path="*">
             <NotFound />
