@@ -1,4 +1,4 @@
-import { ParkingSpot, RegisterUserDTO, Token, User } from 'api/models';
+import { ParkingSpot, RegisterUserDTO, AuthTokens, User } from 'api/models';
 import { LoginUserDTO } from 'api/models/dtos/auth/User';
 import { ApiRoutes } from './ApiRoutes';
 import { CarSpotAPI, PaginatedData } from './ApiTypes';
@@ -15,18 +15,27 @@ export class Api implements CarSpotAPI {
     this.client.setCommonHeader('Authorization', token);
   }
 
+  clearAuthToken(): void {
+    this.client.deleteCommonHeader('Authorization');
+  }
+
+  async refreshToken(refresh: string): Promise<AuthTokens> {
+    const res = await this.client.post(ApiRoutes.refreshTokenRoute, { refresh });
+    return res.data;
+  }
+
   async getUser(): Promise<User> {
     const res = await this.client.get(ApiRoutes.userProfileRoute);
     return res.data;
   }
 
-  async register(userCredentials: RegisterUserDTO): Promise<Token> {
+  async register(userCredentials: RegisterUserDTO): Promise<AuthTokens> {
     const response = await this.client.post(ApiRoutes.registerRoute, userCredentials);
 
     return response.data.jwt;
   }
 
-  async login(userCredentials: LoginUserDTO): Promise<Token> {
+  async login(userCredentials: LoginUserDTO): Promise<AuthTokens> {
     const response = await this.client.post(ApiRoutes.loginRoute, userCredentials);
 
     return response.data.jwt;

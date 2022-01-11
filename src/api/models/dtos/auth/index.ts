@@ -1,2 +1,2 @@
-export type { Token } from './AuthTokens';
-export type { RegisterUserDTO, LoginUserDTO } from './User';
+export * from './AuthTokens';
+export * from './User';

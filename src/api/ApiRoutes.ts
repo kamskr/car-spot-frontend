@@ -6,6 +6,8 @@ export class ApiRoutes {
 
   static loginRoute = '/auth/local/login';
 
+  static refreshTokenRoute = 'auth/refreshToken';
+
   // parking-spots
   static parkingSpotsRoute = '/parking-spots';
 

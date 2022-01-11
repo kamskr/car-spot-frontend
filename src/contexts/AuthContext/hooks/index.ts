@@ -1,1 +1,1 @@
-export { useAuthActions } from "./useAuthActions";
+export { useAuthActions } from './useAuthActions';

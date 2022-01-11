@@ -1,3 +1,4 @@
-export interface Token {
+export interface AuthTokens {
   token: string;
+  refresh_token: string;
 }

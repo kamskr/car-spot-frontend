@@ -2158,18 +2158,6 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/google-maps@^3.2.3":
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/@types/google-maps/-/google-maps-3.2.3.tgz#ea99526e40d3b58a2c07f0b3d5f3b8e0750119c3"
-  integrity sha512-+GR/7sMvo2bENS26H4t2QqoCqE4FE5qhsG8aaDM9mJAlsorkLyaFdTQra8VkmS1RNE09fx9c1kac+GKG0RtA2A==
-  dependencies:
-    "@types/google.maps" "*"
-
-"@types/google.maps@*":
-  version "3.47.0"
-  resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.47.0.tgz#0e5d11339fbef30becbb4e9016be94c4aad6fbab"
-  integrity sha512-/Auj3324mp/E/T5QXAQnXcxtSUgsC1AH//Zt3COYqcwNCmVZNSwytl15jzyjxLcYA0ZDBE1ZBWTawEJPxZqR/w==
-
 "@types/google.maps@3.46.1":
   version "3.46.1"
   resolved "https://registry.npmjs.org/@types/google.maps/-/google.maps-3.46.1.tgz"
@@ -7719,6 +7707,11 @@ jsonfile@^6.0.1:
   dependencies:
     array-includes "^3.1.2"
     object.assign "^4.1.2"
+
+jwt-decode@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-3.1.2.tgz#3fb319f3675a2df0c2895c8f5e9fa4b67b04ed59"
+  integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
 
 kdbush@^3.0.0:
   version "3.0.0"

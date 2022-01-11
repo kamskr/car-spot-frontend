@@ -1,60 +1,79 @@
 import { api } from 'api';
-import { useCallback, useEffect, useState } from 'react';
+import { LoginUserDTO, RegisterUserDTO, AuthTokens } from 'api/models';
+import { clearAuthTokens, getAuthTokens, setAuthTokens } from 'contexts/AuthContext/AuthContext.helpers';
+import { CLEAR_STATE, SET_USER } from 'contexts/AuthContext/AuthContext.state';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 
-export const useAuthActions = () => {
-  const [authContextLoaded, setAuthContextLoaded] = useState(false);
+export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  const checkIfAuthenticated = useCallback(async () => {
-    //   if (localStorage.token) {
-    //     await api.setAuthToken(localStorage.token);
-    //     await getUserData();
-    //   }
-    setTimeout(() => setAuthContextLoaded(true), 0);
+  const checkAuthentication = useCallback(async () => {
+    const { token, refresh } = getAuthTokens();
+
+    if (token && isTokenValid(token)) {
+      api.setAuthToken(token);
+      dispatch(getUserData());
+    } else if (refresh && isTokenValid(refresh)) {
+      const data = await api.refreshToken(refresh);
+      dispatch(finalizeLogin(data));
+    }
+    setTimeout(() => setIsInitialized(true), 0);
   }, []);
 
   const getUserData = async () => {
     try {
-      const userProfile = await api.getUserProfile();
-      // if (userProfile) {
-      //   userDispatch({
-      //     type: SET_USER,
-      //     payload: userProfile,
-      //   });
-      //   userDispatch({ type: SET_AUTHENTICATED });
-      // }
+      const userProfile = await api.getUser();
+      if (userProfile) {
+        dispatch({
+          type: SET_USER,
+          payload: userProfile,
+        });
+      }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.log(err);
       logout();
     }
   };
 
-  const finalizeLogin = useCallback((token: string) => {
-    const tokenString = `Bearer ${token}`;
-    localStorage.setItem('token', tokenString);
-    api.setAuthToken(tokenString);
-    getUserData();
-
-    // dispatch(getAppointments());
+  const finalizeLogin = useCallback(async (authTokens: AuthTokens) => {
+    setAuthTokens(authTokens);
+    await getUserData();
   }, []);
 
-  const register = useCallback(async (): Promise<void> => {
-    // eslint-disable-next-line no-console
-    console.log(register);
+  const createLoginAction = useCallback((performLogin: () => Promise<AuthTokens>) => {
+    return async (dispatch: any): Promise<void> => {
+      const response = await performLogin();
+
+      if (response.token) {
+        const data = response as AuthTokens;
+        await dispatch(finalizeLogin(data));
+      }
+    };
   }, []);
 
-  const login = useCallback(async (): Promise<void> => {
-    // eslint-disable-next-line no-console
-    console.log(login);
+  const register = useCallback(async (userCredentials: RegisterUserDTO) => {
+    return createLoginAction(() => api.register(userCredentials));
+  }, []);
+
+  const login = useCallback(async (userCredentials: LoginUserDTO) => {
+    return createLoginAction(() => api.login(userCredentials));
   }, []);
 
   const logout = useCallback(async (): Promise<void> => {
-    // eslint-disable-next-line no-console
-    console.log(logout);
+    clearAuthTokens();
+    dispatch({ type: CLEAR_STATE });
   }, []);
 
   useEffect(() => {
-    checkIfAuthenticated();
+    checkAuthentication();
   }, []);
 
-  return { authContextLoaded, register, login, logout };
+  return { isInitialized, register, login, logout, checkAuthentication };
 };
+function tokenStorageKey(tokenStorageKey: any, tokenString: string) {
+  throw new Error('Function not implemented.');
+}
+function isTokenValid(refresh: string) {
+  throw new Error('Function not implemented.');
+}
