@@ -8,27 +8,20 @@ import { api } from 'api';
 import useApiRequest from 'hooks/useApiRequest';
 
 import { LoadingIndicator } from 'components/LoadingIndicator';
+import { useParkingSpots } from 'features/SearchSpots/context/ParkingSpots.context';
 
 const mapContainerStyle: CSSProperties = {
   width: '100%',
   height: '100%',
   position: 'relative',
 };
+
 export const SpotsMap = () => {
+  const { parkingSpots, isLoading } = useParkingSpots();
+
   const [activeAddress, setActiveAddress] = useState<ParkingSpot | null>(null);
   const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
   const { isLoaded } = useGoogleMapsContext();
-  const [parkingSpots, setParkingSpots] = useState<ParkingSpot[] | null>(null);
-  const request = useApiRequest();
-
-  const fetchParkingSpots = async () => {
-    const parkingSpotsFetched = await request.dispatch(api.getParkingSpots());
-    setParkingSpots(parkingSpotsFetched);
-  };
-
-  useEffect(() => {
-    fetchParkingSpots();
-  }, []);
 
   useEffect(() => {
     if (!mapInstance) {
@@ -43,7 +36,7 @@ export const SpotsMap = () => {
     console.log(activeAddress);
   }, [activeAddress]);
 
-  if (!isLoaded) {
+  if (!isLoaded || isLoading) {
     return <LoadingIndicator />;
   }
 

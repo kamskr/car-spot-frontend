@@ -10,7 +10,7 @@ export const SpotsList = () => {
       <Typography variant="h4" component="h2">
         My spots
       </Typography>
-      <Button>Reserve a parking spot</Button>
+      <Button>Pick slot on the map</Button>
       <MySpotsList items={[]} />
     </SideListContainer>
   );
