@@ -10,7 +10,6 @@ export const useParkingSpotsActions = () => {
 
   const fetchParkingSpots = async () => {
     const parkingSpotsFetched = await request.dispatch(api.getParkingSpots());
-    console.log(parkingSpotsFetched);
     setParkingSpots(parkingSpotsFetched);
   };
 

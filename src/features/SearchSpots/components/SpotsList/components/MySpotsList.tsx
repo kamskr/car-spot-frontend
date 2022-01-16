@@ -12,8 +12,6 @@ import { useUser } from 'contexts';
 export const MySpotsList = () => {
   const user = useUser();
 
-  console.log(user);
-
   if (!user || !user.parking_spots || !user.parking_spots.length) {
     return (
       <ListContainer>

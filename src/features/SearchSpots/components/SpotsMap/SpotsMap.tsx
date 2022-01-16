@@ -35,7 +35,7 @@ export const SpotsMap = () => {
     console.log(activeAddress);
   }, [activeAddress]);
 
-  if (!isLoaded || isLoading) {
+  if (!isLoaded || isLoading || !user) {
     return <LoadingIndicator />;
   }
 
@@ -64,9 +64,9 @@ export const SpotsMap = () => {
             {(clusterer) =>
               parkingSpots.map((spot) => {
                 const now = new Date();
-                const spotBusy = spot.dateStart && spot.dateEnd && spot.dateStart < now && spot.dateEnd > now;
+                const spotBusy = spot.dateStart && spot.dateTo && spot.dateStart < now && spot.dateTo > now;
 
-                const spotMine = spotBusy && spot.user.id === user?.id;
+                const spotMine = spotBusy && spot.user?.id === user?.id;
 
                 const carIcon = spotMine
                   ? {

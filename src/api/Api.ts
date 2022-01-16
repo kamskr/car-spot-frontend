@@ -42,6 +42,17 @@ export class Api implements CarSpotAPI {
 
   async getParkingSpots(): Promise<ParkingSpot[]> {
     const res = await this.client.get(ApiRoutes.parkingSpotsRoute);
+
+    const parkingSpots = res.data;
+
+    if (parkingSpots.length) {
+      return parkingSpots.map((spot: any) => ({
+        ...spot,
+        createdAt: new Date(spot.createdAt),
+        dateStart: new Date(spot.dateStart),
+        dateTo: new Date(spot.dateTo),
+      }));
+    }
     return res.data;
   }
 }
