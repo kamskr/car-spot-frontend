@@ -9,9 +9,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useAuth } from 'contexts';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { routes } from 'routes/routes';
-import { alignItems } from '@xstyled/styled-components';
 
 interface Props {
   openDrawer: () => void;
@@ -36,8 +35,11 @@ export const AppBar = ({ openDrawer }: Props) => {
           <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={openDrawer}>
             <MenuIcon />
           </IconButton>
+
           <Typography variant="h5" sx={{ flexGrow: 1 }}>
-            CarSpot
+            <Link to={routes.home} style={{ color: 'white', textDecoration: 'none' }}>
+              CarSpot
+            </Link>
           </Typography>
 
           {isAuthenticated ? (
