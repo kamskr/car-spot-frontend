@@ -15,9 +15,9 @@ export const App = () => {
       <GlobalProvider>
         <Navigation />
         <Switch>
-          <Route exact path={routes.home}>
+          <ProtectedRoute allowIf={UserStatus.authenticated} redirectTo={routes.login} exact path={routes.home}>
             <SearchSpots />
-          </Route>
+          </ProtectedRoute>
           <ProtectedRoute allowIf={UserStatus.unauthenticated} redirectTo={routes.home} exact path={routes.login}>
             <Login />
           </ProtectedRoute>
