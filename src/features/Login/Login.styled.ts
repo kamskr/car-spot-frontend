@@ -6,4 +6,3 @@ export const AuthContent = styled.div`
   align-items: center;
   padding-top: 40px;
 `;
-export const AuthFormContainer = styled.div``;

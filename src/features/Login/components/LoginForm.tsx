@@ -30,7 +30,6 @@ export const LoginForm = () => {
 
 const LoginFormContainer = styled(Card)`
   margin-top: 30px;
-
   padding: 30px;
 `;
 

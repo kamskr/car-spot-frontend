@@ -1,7 +1,6 @@
 import styled from '@xstyled/styled-components';
 
 export const Wrapper = styled.div`
-  background-color: background;
   display: flex;
   justify-content: center;
   left: ${({ theme }) => theme.sidebar.width};
