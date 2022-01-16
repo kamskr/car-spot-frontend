@@ -11,7 +11,7 @@ export const SpotsList = () => {
         My spots
       </Typography>
       <Button>Pick slot on the map</Button>
-      <MySpotsList items={[]} />
+      <MySpotsList />
     </SideListContainer>
   );
 };

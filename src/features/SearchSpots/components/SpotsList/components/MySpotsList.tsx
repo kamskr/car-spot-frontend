@@ -7,25 +7,27 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { ParkingSpot } from 'api/models';
 import styled from '@xstyled/styled-components';
+import { useUser } from 'contexts';
 
-interface Props {
-  items: ParkingSpot[];
-}
+export const MySpotsList = () => {
+  const user = useUser();
 
-export const MySpotsList = ({ items }: Props) => {
-  if (!items || !items.length) {
+  console.log(user);
+
+  if (!user || !user.parking_spots || !user.parking_spots.length) {
     return (
       <ListContainer>
         <Typography component="p">You have no spots reserved yet.</Typography>
       </ListContainer>
     );
   }
+
   return (
     <ListContainer>
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', padding: 1 }}>
-        {items.map((spot) => (
+        {user.parking_spots.map((spot) => (
           <ListItem
-            key={spot.id}
+            key={spot}
             disableGutters
             secondaryAction={
               <IconButton>
@@ -33,7 +35,7 @@ export const MySpotsList = ({ items }: Props) => {
               </IconButton>
             }
           >
-            <ListItemText primary={`Line item ${spot.dateStart}`} />
+            <ListItemText primary={`Spot id ${spot}`} />
           </ListItem>
         ))}
       </List>
