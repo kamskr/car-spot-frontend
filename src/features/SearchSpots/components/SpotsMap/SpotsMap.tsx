@@ -1,12 +1,13 @@
 /* eslint-disable no-undef */
 import React, { CSSProperties, useEffect, useState } from 'react';
 import { GoogleMap, Marker, MarkerClusterer } from '@react-google-maps/api';
-import { ParkingSpot } from 'api/models';
+import { ParkingSpot, Position } from 'api/models';
 import { useGoogleMapsContext } from 'contexts/GoogleMapsContext';
 
 import { LoadingIndicator } from 'components/LoadingIndicator';
 import { useParkingSpots } from 'features/SearchSpots/context/ParkingSpots.context';
 import { useUser } from 'contexts';
+import { AddSpot } from './components/AddSpot';
 
 const mapContainerStyle: CSSProperties = {
   width: '100%',
@@ -20,11 +21,11 @@ const center = {
 };
 
 export const SpotsMap = () => {
-  const { parkingSpots, isLoading } = useParkingSpots();
-  const user = useUser();
-
   const [activeAddress, setActiveAddress] = useState<ParkingSpot | null>(null);
   const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
+  const [addingSpotPosition, setAddingSpotPosition] = useState<Position | null>(null);
+  const { parkingSpots, isLoading } = useParkingSpots();
+  const user = useUser();
   const { isLoaded } = useGoogleMapsContext();
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export const SpotsMap = () => {
       lat: latLng.lat(),
       lng: latLng.lng(),
     };
+    setAddingSpotPosition(position);
   };
 
   if (!isLoaded || isLoading || !user) {
@@ -114,6 +116,7 @@ export const SpotsMap = () => {
           </MarkerClusterer>
         )}
         {/* {activeAddress && <HcpPopupCard address={activeAddress} params={params} onClose={() => setActiveAddress(null)} />} */}
+        <AddSpot open={!!addingSpotPosition} handleClose={() => setAddingSpotPosition(null)} />
       </GoogleMap>
     </>
   );
