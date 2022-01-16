@@ -74,7 +74,9 @@ export const AppBar = ({ openDrawer }: Props) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem component={NavLink} to={routes.profile}>
+                  Profile
+                </MenuItem>
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
             </div>
