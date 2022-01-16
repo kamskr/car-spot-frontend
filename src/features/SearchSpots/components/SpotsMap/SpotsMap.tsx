@@ -14,6 +14,11 @@ const mapContainerStyle: CSSProperties = {
   position: 'relative',
 };
 
+const center = {
+  lat: 52.229676,
+  lng: 21.012229,
+};
+
 export const SpotsMap = () => {
   const { parkingSpots, isLoading } = useParkingSpots();
   const user = useUser();
@@ -35,14 +40,18 @@ export const SpotsMap = () => {
     console.log(activeAddress);
   }, [activeAddress]);
 
+  const handleMapClick = (e: any) => {
+    const { latLng } = e;
+
+    const position = {
+      lat: latLng.lat(),
+      lng: latLng.lng(),
+    };
+  };
+
   if (!isLoaded || isLoading || !user) {
     return <LoadingIndicator />;
   }
-
-  const center = {
-    lat: 52.229676,
-    lng: 21.012229,
-  };
 
   return (
     <>
@@ -58,6 +67,7 @@ export const SpotsMap = () => {
         zoom={10}
         onLoad={(map) => setMapInstance(map)}
         mapContainerStyle={mapContainerStyle}
+        onClick={handleMapClick}
       >
         {!!parkingSpots?.length && (
           <MarkerClusterer>
