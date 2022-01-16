@@ -1,14 +1,12 @@
 /* eslint-disable no-undef */
-import React, { CSSProperties, FC, useEffect, useMemo, useState } from 'react';
-import { GoogleMap, Marker, MarkerClusterer, LoadScript } from '@react-google-maps/api';
-import { scroller } from 'react-scroll';
+import React, { CSSProperties, useEffect, useState } from 'react';
+import { GoogleMap, Marker, MarkerClusterer } from '@react-google-maps/api';
 import { ParkingSpot } from 'api/models';
 import { useGoogleMapsContext } from 'contexts/GoogleMapsContext';
-import { api } from 'api';
-import useApiRequest from 'hooks/useApiRequest';
 
 import { LoadingIndicator } from 'components/LoadingIndicator';
 import { useParkingSpots } from 'features/SearchSpots/context/ParkingSpots.context';
+import { useUser } from 'contexts';
 
 const mapContainerStyle: CSSProperties = {
   width: '100%',
@@ -18,6 +16,7 @@ const mapContainerStyle: CSSProperties = {
 
 export const SpotsMap = () => {
   const { parkingSpots, isLoading } = useParkingSpots();
+  const user = useUser();
 
   const [activeAddress, setActiveAddress] = useState<ParkingSpot | null>(null);
   const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
@@ -64,6 +63,28 @@ export const SpotsMap = () => {
           <MarkerClusterer>
             {(clusterer) =>
               parkingSpots.map((spot) => {
+                const now = new Date();
+                const spotBusy = spot.dateStart && spot.dateEnd && spot.dateStart < now && spot.dateEnd > now;
+
+                const spotMine = spotBusy && spot.user.id === user?.id;
+
+                const carIcon = spotMine
+                  ? {
+                      url: 'https://www.nicepng.com/png/full/253-2534170_clip-art-at-clker-com-vector-online-green.png',
+                      scaledSize: new google.maps.Size(24, 24),
+                    }
+                  : {
+                      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Electric_car_icon.png/912px-Electric_car_icon.png',
+                      scaledSize: new google.maps.Size(24, 24),
+                    };
+
+                const icon = spotBusy
+                  ? carIcon
+                  : {
+                      url: 'http://cdn.onlinewebfonts.com/svg/img_349568.png',
+                      scaledSize: new google.maps.Size(24, 34),
+                    };
+
                 return (
                   <Marker
                     key={spot.id}
@@ -72,15 +93,9 @@ export const SpotsMap = () => {
                       lng: spot.position.lng,
                     }}
                     clusterer={clusterer}
+                    icon={icon}
                     onClick={() => {
                       setActiveAddress(spot);
-
-                      // scroller.scrollTo(spot.id, {
-                      //   smooth: true,
-                      //   containerId: 'parking-spot',
-                      //   offset: -10,
-                      //   duration: 220,
-                      // });
                     }}
                   />
                 );
