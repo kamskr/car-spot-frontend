@@ -40,7 +40,6 @@ export class Api implements CarSpotAPI {
 
   async updateUser(id: string, data: UserDTO): Promise<void> {
     const res = await this.client.put(ApiRoutes.usersIdRoute(id), data);
-    console.log(res);
   }
 
   async register(userCredentials: RegisterUserDTO): Promise<any> {
