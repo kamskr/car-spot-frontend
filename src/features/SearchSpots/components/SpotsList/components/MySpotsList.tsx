@@ -10,7 +10,7 @@ import styled from '@xstyled/styled-components';
 import { useUser } from 'contexts';
 import { format } from 'date-fns';
 
-export const MySpotsList = () => {
+export const MySpotsList = ({ activeAddress, setActiveAddress }: any) => {
   const user = useUser();
 
   if (!user || !user.parking_spots || !user.parking_spots.length) {
@@ -33,6 +33,7 @@ export const MySpotsList = () => {
                 <LocationOnIcon />
               </IconButton>
             }
+            onClick={() => setActiveAddress(spot)}
           >
             <ListItemText primary={`Spot id ${spot.id} Date: ${spot.dateStart && format(spot.dateStart, 'Pp')}`} />
           </ListItem>

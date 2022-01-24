@@ -9,4 +9,5 @@ export interface ParkingSpot {
   allowContact: boolean;
   user?: User;
   car?: Car;
+  spotBusy?: boolean;
 }

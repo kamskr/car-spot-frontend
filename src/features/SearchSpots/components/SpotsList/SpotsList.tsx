@@ -4,14 +4,14 @@ import Button from '@mui/material/Button';
 import styled from '@xstyled/styled-components';
 import { MySpotsList } from './components/MySpotsList';
 
-export const SpotsList = () => {
+export const SpotsList = ({ activeAddress, setActiveAddress }: any) => {
   return (
     <SideListContainer>
       <Typography variant="h4" component="h2">
         My spots
       </Typography>
       <Button>Pick slot on the map</Button>
-      <MySpotsList />
+      <MySpotsList activeAddress={activeAddress} setActiveAddress={setActiveAddress} />
     </SideListContainer>
   );
 };

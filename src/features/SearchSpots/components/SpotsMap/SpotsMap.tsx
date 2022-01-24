@@ -20,8 +20,7 @@ const center = {
   lng: 21.012229,
 };
 
-export const SpotsMap = () => {
-  const [activeAddress, setActiveAddress] = useState<ParkingSpot | null>(null);
+export const SpotsMap = ({ activeAddress, setActiveAddress }: any) => {
   const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
   const [addingSpotPosition, setAddingSpotPosition] = useState<Position | null>(null);
   const { parkingSpots, isLoading } = useParkingSpots();
@@ -107,7 +106,7 @@ export const SpotsMap = () => {
                     clusterer={clusterer}
                     icon={icon}
                     onClick={() => {
-                      setActiveAddress(spot);
+                      setActiveAddress({ ...spot, spotBusy });
                     }}
                   />
                 );
