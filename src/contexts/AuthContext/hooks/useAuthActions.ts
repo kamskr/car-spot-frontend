@@ -83,5 +83,5 @@ export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
     checkAuthentication();
   }, []);
 
-  return { isInitialized, register, login, logout, checkAuthentication };
+  return { isInitialized, register, login, logout, checkAuthentication, getUserData };
 };

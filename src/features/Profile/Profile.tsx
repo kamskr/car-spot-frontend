@@ -1,11 +1,30 @@
 import React from 'react';
 import { ContentContainer } from 'layout/ContentContainer';
-import { useUser } from 'contexts';
-import { Card, Typography } from '@mui/material';
+import { useAuth } from 'contexts';
+import { Card, TextField, Typography } from '@mui/material';
 import styled from '@xstyled/styled-components';
+import useApiRequest from 'hooks/useApiRequest';
+import { useForm } from 'react-hook-form';
+import { UserDTO } from 'api/models';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { api } from 'api';
 
 export const Profile = () => {
-  const user = useUser();
+  const { user, reloadUser } = useAuth();
+  const { register, handleSubmit } = useForm<UserDTO>({
+    defaultValues: {
+      username: user?.username || '',
+      email: user?.email || '',
+      name: user?.name || '',
+      surname: user?.surname || '',
+    },
+  });
+  const request = useApiRequest();
+
+  const onSubmit = handleSubmit(async (data) => {
+    await request.dispatch(api.updateUser(user?.id || '', data));
+    reloadUser();
+  });
 
   if (!user) {
     return <p>no user data</p>;
@@ -16,13 +35,20 @@ export const Profile = () => {
       <div>
         <ProfileContent style={{ backgroundColor: 'white' }}>
           <Typography variant="h2">Profile details</Typography>
-          <p>{user.id}</p>
-          <p>{user.name}</p>
-          <p>{user.surname}</p>
-          <p>{user.username}</p>
-          <p>{user.email}</p>
-          <p>{user.cars.length}</p>
-          <p>{user.parking_spots.length}</p>
+          <p>ID: {user.id}</p>
+          <p>Cars count: {user.cars.length}</p>
+          <p>Spots reserved: {user.parking_spots.length}</p>
+          <Form onSubmit={onSubmit}>
+            <TextField {...register('username')} type="text" label="Username" variant="standard" />
+            <TextField {...register('email')} type="email" label="Email" variant="standard" />
+            <TextField {...register('name')} type="text" label="Name" variant="standard" />
+            <TextField {...register('surname')} type="text" label="Surname" variant="standard" />
+            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+              <LoadingButton type="submit" variant="contained" loading={request.isLoading}>
+                Update profile
+              </LoadingButton>
+            </div>
+          </Form>
         </ProfileContent>
       </div>
     </ContentContainer>
@@ -35,4 +61,11 @@ const ProfileContent = styled(Card)`
   padding: 40px;
   background-color: red;
   margin-top: 20px;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 500px;
 `;
