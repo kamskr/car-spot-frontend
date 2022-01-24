@@ -48,6 +48,14 @@ export const BookSpot = ({ parkingSpot, open, handleClose }: Props) => {
     reloadParkingSpots();
   });
 
+  const onRemovePin = async () => {
+    await request.dispatch(
+      api.updateParkingSpot(parkingSpot.id, { ...getValues(), dateStart: null, dateTo: null, user: null, car: null }),
+    );
+    handleClose();
+    reloadParkingSpots();
+  };
+
   return (
     <CSModal open={open} handleClose={handleClose}>
       <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -86,11 +94,11 @@ export const BookSpot = ({ parkingSpot, open, handleClose }: Props) => {
                 label="Car"
                 onChange={(e) => {
                   setValue('car', e.target.value);
-                  setCarId(e.target.value);
+                  setCarId(e.target.value || '');
                 }}
               >
                 {user.cars.map((car) => (
-                  <MenuItem value={car.id}>
+                  <MenuItem value={car.id} key={car.id}>
                     {car.id} ({car.carBrand}, {car.model}, {car.color})
                   </MenuItem>
                 ))}
@@ -116,9 +124,21 @@ export const BookSpot = ({ parkingSpot, open, handleClose }: Props) => {
           </FormGroup>
 
           <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-            <Button variant="contained" color="error" onClick={handleClose}>
-              Cancel
-            </Button>
+            {parkingSpot.spotBusy ? (
+              <LoadingButton
+                onClick={() => onRemovePin()}
+                color="error"
+                variant="contained"
+                loading={request.isLoading}
+              >
+                Remove pin
+              </LoadingButton>
+            ) : (
+              <Button variant="contained" color="error" onClick={handleClose}>
+                Cancel
+              </Button>
+            )}
+
             <LoadingButton type="submit" variant="contained" loading={request.isLoading}>
               Book
             </LoadingButton>

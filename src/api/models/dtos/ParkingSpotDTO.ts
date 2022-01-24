@@ -3,9 +3,9 @@ export interface ParkingSpotDTO {
     lat: number;
     lng: number;
   };
-  dateStart?: string;
-  dateTo?: string;
-  user?: string;
-  car?: string;
+  dateStart?: string | null;
+  dateTo?: string | null;
+  user?: string | null;
+  car?: string | null;
   allowContact?: boolean;
 }
