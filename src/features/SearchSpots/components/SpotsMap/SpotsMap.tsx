@@ -116,7 +116,13 @@ export const SpotsMap = () => {
           </MarkerClusterer>
         )}
         {/* {activeAddress && <HcpPopupCard address={activeAddress} params={params} onClose={() => setActiveAddress(null)} />} */}
-        <AddSpot open={!!addingSpotPosition} handleClose={() => setAddingSpotPosition(null)} />
+        {!!addingSpotPosition && (
+          <AddSpot
+            open={!!addingSpotPosition}
+            position={addingSpotPosition}
+            handleClose={() => setAddingSpotPosition(null)}
+          />
+        )}
       </GoogleMap>
     </>
   );

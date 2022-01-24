@@ -2,21 +2,30 @@ import React from 'react';
 import { TextField, Typography } from '@mui/material';
 import { CSModal } from 'components/CSModal';
 import { useForm } from 'react-hook-form';
-import { ParkingSpot } from 'api/models';
+
+import { ParkingSpotDTO, Position } from 'api/models';
 import useApiRequest from 'hooks/useApiRequest';
 import LoadingButton from '@mui/lab/LoadingButton';
+import styled from '@xstyled/styled-components';
+import axios from 'axios';
+import { api } from 'api';
+import { useParkingSpots } from 'features/SearchSpots/context/ParkingSpots.context';
 
 interface Props {
+  position: Position;
   open: boolean;
-  handleClose: (event: Event) => void;
+  handleClose: () => void;
 }
 
-export const AddSpot = ({ open, handleClose }: Props) => {
-  const { register, handleSubmit } = useForm<ParkingSpot>();
+export const AddSpot = ({ open, handleClose, position }: Props) => {
+  const { register, handleSubmit } = useForm<ParkingSpotDTO>({ defaultValues: { position } });
   const request = useApiRequest();
+  const { reloadParkingSpots } = useParkingSpots();
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const onSubmit = handleSubmit(async (data) => {
+    await request.dispatch(api.createParkingSpot(data));
+    handleClose();
+    reloadParkingSpots();
   });
 
   return (
@@ -25,11 +34,17 @@ export const AddSpot = ({ open, handleClose }: Props) => {
         Add new spot
       </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+        This will be added to our data base and marked as available.
       </Typography>
       <Form onSubmit={onSubmit}>
-        <TextField {...register('position.lat')} label="Login or Email" variant="standard" />
-        <TextField {...register('position.lng')} type="password" label="Password" variant="standard" />
+        <TextField
+          {...register('position.lat')}
+          type="number"
+          inputProps={{ step: 'any' }}
+          label="Lat"
+          variant="standard"
+        />
+        <TextField {...register('position.lng')} type="number" inputProps={{ step: 'any' }} variant="standard" />
 
         <LoadingButton type="submit" variant="contained" loading={request.isLoading}>
           Add spot

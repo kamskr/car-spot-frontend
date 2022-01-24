@@ -1,4 +1,4 @@
-import { ParkingSpot, AuthTokens, RegisterUserDTO, LoginUserDTO, User } from 'api/models';
+import { ParkingSpot, AuthTokens, RegisterUserDTO, LoginUserDTO, User, ParkingSpotDTO } from 'api/models';
 
 export interface CarSpotAPI {
   // Authentication
@@ -8,6 +8,7 @@ export interface CarSpotAPI {
 
   // parking-spots
   getParkingSpots(): Promise<ParkingSpot[]>;
+  createParkingSpot(data: ParkingSpotDTO): Promise<ParkingSpot>;
 }
 
 export interface ApiError {

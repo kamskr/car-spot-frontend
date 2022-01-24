@@ -1,4 +1,4 @@
-import { ParkingSpot, RegisterUserDTO, LoginUserDTO, AuthTokens, User } from 'api/models';
+import { ParkingSpot, RegisterUserDTO, LoginUserDTO, AuthTokens, User, ParkingSpotDTO } from 'api/models';
 import { ApiRoutes } from './ApiRoutes';
 import { CarSpotAPI, PaginatedData } from './ApiTypes';
 import { HttpClient } from './HttpClient';
@@ -53,6 +53,12 @@ export class Api implements CarSpotAPI {
         dateTo: new Date(spot.dateTo),
       }));
     }
+    return res.data;
+  }
+
+  async createParkingSpot(data: ParkingSpotDTO): Promise<ParkingSpot> {
+    const res = await this.client.post(ApiRoutes.parkingSpotsRoute, data);
+
     return res.data;
   }
 }

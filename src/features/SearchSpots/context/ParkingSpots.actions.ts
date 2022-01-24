@@ -17,5 +17,5 @@ export const useParkingSpotsActions = () => {
     fetchParkingSpots();
   }, []);
 
-  return { parkingSpots };
+  return { parkingSpots, fetchParkingSpots, isFetching: request.isLoading };
 };

@@ -5,11 +5,12 @@ import { useParkingSpotsActions } from './ParkingSpots.actions';
 export const ParkingSpotsContext = createContext<ParkingSpotsState>({} as ParkingSpotsState);
 
 export const ParkingSpotsProvider: FC = ({ children }) => {
-  const { parkingSpots } = useParkingSpotsActions();
+  const { parkingSpots, isFetching, fetchParkingSpots } = useParkingSpotsActions();
   return (
     <ParkingSpotsContext.Provider
       value={{
-        isLoading: false,
+        reloadParkingSpots: fetchParkingSpots,
+        isLoading: isFetching,
         parkingSpots,
       }}
     >
