@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
-import React, { CSSProperties, useEffect, useState } from 'react';
 import { GoogleMap, Marker, MarkerClusterer } from '@react-google-maps/api';
 import { ParkingSpot, Position } from 'api/models';
-import { useGoogleMapsContext } from 'contexts/GoogleMapsContext';
-
 import { LoadingIndicator } from 'components/LoadingIndicator';
-import { useParkingSpots } from 'features/SearchSpots/context/ParkingSpots.context';
 import { useUser } from 'contexts';
+import { useGoogleMapsContext } from 'contexts/GoogleMapsContext';
+import { BookSpot } from 'features/SearchSpots/components/SpotsMap/components/BookSpot';
+import { useParkingSpots } from 'features/SearchSpots/context/ParkingSpots.context';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { AddSpot } from './components/AddSpot';
 
 const mapContainerStyle: CSSProperties = {
@@ -122,6 +122,9 @@ export const SpotsMap = () => {
             position={addingSpotPosition}
             handleClose={() => setAddingSpotPosition(null)}
           />
+        )}
+        {!!activeAddress && (
+          <BookSpot parkingSpot={activeAddress} open={!!activeAddress} handleClose={() => setActiveAddress(null)} />
         )}
       </GoogleMap>
     </>

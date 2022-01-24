@@ -24,8 +24,18 @@ export class Api implements CarSpotAPI {
   }
 
   async getUser(): Promise<User> {
-    const res = await this.client.get(ApiRoutes.userProfileRoute);
-    return res.data;
+    const resMe = await this.client.get(ApiRoutes.userProfileRoute);
+    const res = await this.client.get(ApiRoutes.usersIdRoute(resMe.data.id));
+
+    return {
+      ...res.data,
+      parking_spots: res.data.parking_spots.map((spot: any) => ({
+        ...spot,
+        createdAt: new Date(spot.createdAt),
+        dateStart: new Date(spot.dateStart),
+        dateTo: new Date(spot.dateTo),
+      })),
+    };
   }
 
   async register(userCredentials: RegisterUserDTO): Promise<any> {

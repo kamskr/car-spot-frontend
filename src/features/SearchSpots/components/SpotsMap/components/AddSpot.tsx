@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Typography } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import { CSModal } from 'components/CSModal';
 import { useForm } from 'react-hook-form';
 
@@ -7,7 +7,6 @@ import { ParkingSpotDTO, Position } from 'api/models';
 import useApiRequest from 'hooks/useApiRequest';
 import LoadingButton from '@mui/lab/LoadingButton';
 import styled from '@xstyled/styled-components';
-import axios from 'axios';
 import { api } from 'api';
 import { useParkingSpots } from 'features/SearchSpots/context/ParkingSpots.context';
 
@@ -45,10 +44,14 @@ export const AddSpot = ({ open, handleClose, position }: Props) => {
           variant="standard"
         />
         <TextField {...register('position.lng')} type="number" inputProps={{ step: 'any' }} variant="standard" />
-
-        <LoadingButton type="submit" variant="contained" loading={request.isLoading}>
-          Add spot
-        </LoadingButton>
+        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+          <Button variant="contained" color="error" onClick={handleClose}>
+            Cancel
+          </Button>
+          <LoadingButton type="submit" variant="contained" loading={request.isLoading}>
+            Add spot
+          </LoadingButton>
+        </div>
       </Form>
     </CSModal>
   );

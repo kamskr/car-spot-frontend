@@ -1,3 +1,5 @@
+import { Car, ParkingSpot } from 'api/models';
+
 export interface User {
   id: string;
   name?: string;
@@ -6,6 +8,6 @@ export interface User {
   email: string;
   confirmed: boolean;
   blocked: boolean;
-  cars: string[];
-  parking_spots: string[];
+  cars: Car[];
+  parking_spots: ParkingSpot[];
 }

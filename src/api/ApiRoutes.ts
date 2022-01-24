@@ -16,4 +16,6 @@ export class ApiRoutes {
 
   // users
   static usersRoute = '/users';
+
+  static usersIdRoute = (id: string) => `/users/${id}`;
 }
