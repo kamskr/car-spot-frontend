@@ -9,6 +9,7 @@ export interface CarSpotAPI {
   // parking-spots
   getParkingSpots(): Promise<ParkingSpot[]>;
   createParkingSpot(data: ParkingSpotDTO): Promise<ParkingSpot>;
+  updateParkingSpot(id: string, data: ParkingSpotDTO): Promise<ParkingSpot>;
 }
 
 export interface ApiError {

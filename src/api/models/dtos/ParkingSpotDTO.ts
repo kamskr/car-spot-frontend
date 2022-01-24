@@ -5,6 +5,7 @@ export interface ParkingSpotDTO {
   };
   dateStart?: string;
   dateTo?: string;
+  user?: string;
   car?: string;
   allowContact?: boolean;
 }

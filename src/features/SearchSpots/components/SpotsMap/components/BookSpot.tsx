@@ -7,6 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import styled from '@xstyled/styled-components';
+import { api } from 'api';
 import { ParkingSpot, ParkingSpotDTO } from 'api/models';
 import { CSModal } from 'components/CSModal';
 import { useUser } from 'contexts';
@@ -26,6 +27,10 @@ export const BookSpot = ({ parkingSpot, open, handleClose }: Props) => {
   const [dateStart, setDateStart] = useState<Date | null>(new Date());
   const [dateTo, setDateTo] = useState<Date | null>(add(new Date(), { hours: 1 }));
   const [allowContact, setAllowContact] = useState(false);
+  const [carId, setCarId] = useState('');
+  const request = useApiRequest();
+  const user = useUser();
+  const { reloadParkingSpots } = useParkingSpots();
 
   const { handleSubmit, setValue, getValues } = useForm<ParkingSpotDTO>({
     defaultValues: {
@@ -34,17 +39,15 @@ export const BookSpot = ({ parkingSpot, open, handleClose }: Props) => {
       dateTo: add(new Date(), { hours: 1 }).toString(),
       car: '',
       allowContact: false,
+      user: user?.id,
     },
   });
-  const request = useApiRequest();
-  const user = useUser();
-  //   const { reloadParkingSpots } = useParkingSpots();
 
   const onSubmit = handleSubmit(async (data) => {
-    // await request.dispatch(api.createParkingSpot(data));
+    await request.dispatch(api.updateParkingSpot(parkingSpot.id, data));
     console.log(data);
-    // handleClose();
-    // reloadParkingSpots();
+    handleClose();
+    reloadParkingSpots();
   });
 
   return (
@@ -67,7 +70,7 @@ export const BookSpot = ({ parkingSpot, open, handleClose }: Props) => {
             label="End date"
             value={dateTo}
             onChange={(date) => {
-              setDateStart(date);
+              setDateTo(date);
               setValue('dateTo', date?.toString());
             }}
             renderInput={(params) => <TextField {...params} />}
@@ -83,7 +86,7 @@ export const BookSpot = ({ parkingSpot, open, handleClose }: Props) => {
               label="Car"
               onChange={(e) => {
                 setValue('car', e.target.value);
-                setAllowContact((prev) => prev);
+                setCarId(e.target.value);
               }}
             >
               {user.cars.map((car) => (

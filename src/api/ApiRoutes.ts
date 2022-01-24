@@ -11,6 +11,8 @@ export class ApiRoutes {
   // parking-spots
   static parkingSpotsRoute = '/parking-spots';
 
+  static parkingSpotsIdRoute = (id: string) => `/parking-spots/${id}`;
+
   // cars
   static carsRoute = '/cars';
 

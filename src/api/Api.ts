@@ -71,4 +71,9 @@ export class Api implements CarSpotAPI {
 
     return res.data;
   }
+
+  async updateParkingSpot(id: string, data: ParkingSpotDTO): Promise<ParkingSpot> {
+    const res = await this.client.put(ApiRoutes.parkingSpotsIdRoute(id), data);
+    return res.data;
+  }
 }
