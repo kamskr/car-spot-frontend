@@ -2,12 +2,12 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import LoadingButton from '@mui/lab/LoadingButton';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { Button, InputLabel, TextField, Typography } from '@mui/material';
+import { Button, FormControlLabel, FormGroup, InputLabel, Switch, TextField, Typography } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import styled from '@xstyled/styled-components';
-import { ParkingSpot } from 'api/models';
+import { ParkingSpot, ParkingSpotDTO } from 'api/models';
 import { CSModal } from 'components/CSModal';
 import { useUser } from 'contexts';
 import { add } from 'date-fns';
@@ -25,9 +25,16 @@ interface Props {
 export const BookSpot = ({ parkingSpot, open, handleClose }: Props) => {
   const [dateStart, setDateStart] = useState<Date | null>(new Date());
   const [dateTo, setDateTo] = useState<Date | null>(add(new Date(), { hours: 1 }));
+  const [allowContact, setAllowContact] = useState(false);
 
-  const { handleSubmit, setValue, getValues } = useForm<ParkingSpot>({
-    defaultValues: { ...parkingSpot, dateStart: new Date(), dateTo: add(new Date(), { hours: 1 }) },
+  const { handleSubmit, setValue, getValues } = useForm<ParkingSpotDTO>({
+    defaultValues: {
+      ...parkingSpot,
+      dateStart: new Date().toString(),
+      dateTo: add(new Date(), { hours: 1 }).toString(),
+      car: '',
+      allowContact: false,
+    },
   });
   const request = useApiRequest();
   const user = useUser();
@@ -35,7 +42,7 @@ export const BookSpot = ({ parkingSpot, open, handleClose }: Props) => {
 
   const onSubmit = handleSubmit(async (data) => {
     // await request.dispatch(api.createParkingSpot(data));
-    console.log(user);
+    console.log(data);
     // handleClose();
     // reloadParkingSpots();
   });
@@ -47,39 +54,63 @@ export const BookSpot = ({ parkingSpot, open, handleClose }: Props) => {
       </Typography>
       <Form onSubmit={onSubmit}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          {/* <DateTimePicker
+          <DateTimePicker
             label="Start date"
             value={dateStart}
             onChange={(date) => {
               setDateStart(date);
-              setValue('dateStart', date || new Date());
+              setValue('dateStart', date?.toString());
             }}
             renderInput={(params) => <TextField {...params} />}
-          /> */}
-          {/* <DateTimePicker
+          />
+          <DateTimePicker
             label="End date"
             value={dateTo}
             onChange={(date) => {
               setDateStart(date);
-              setValue('dateTo', date || new Date());
+              setValue('dateTo', date?.toString());
             }}
             renderInput={(params) => <TextField {...params} />}
-          /> */}
-          {/* <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={getValues('car')}
-              label="Age"
-              onChange={(value) => console.log(value)}
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl> */}
+          />
         </LocalizationProvider>
+        {user && user.cars && (
+          <FormControl fullWidth>
+            <InputLabel id="car">Car</InputLabel>
+            <Select
+              labelId="car"
+              id="car-select"
+              value={getValues('car')}
+              label="Car"
+              onChange={(e) => {
+                setValue('car', e.target.value);
+                setAllowContact((prev) => prev);
+              }}
+            >
+              {user.cars.map((car) => (
+                <MenuItem value={car.id}>
+                  {car.id} ({car.carBrand}, {car.model}, {car.color})
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
+        <FormGroup aria-label="contact" row>
+          <FormControlLabel
+            value={allowContact}
+            control={
+              <Switch
+                checked={allowContact}
+                color="primary"
+                onChange={(e) => {
+                  setValue('allowContact', e.target.checked);
+                  setAllowContact(e.target.checked);
+                }}
+              />
+            }
+            label="Allow contact"
+            labelPlacement="start"
+          />
+        </FormGroup>
 
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <Button variant="contained" color="error" onClick={handleClose}>
