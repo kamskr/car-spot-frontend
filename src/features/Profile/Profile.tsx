@@ -17,6 +17,7 @@ export const Profile = () => {
       email: user?.email || '',
       name: user?.name || '',
       surname: user?.surname || '',
+      phone: user?.phone || '',
     },
   });
   const request = useApiRequest();
@@ -43,6 +44,7 @@ export const Profile = () => {
             <TextField {...register('email')} type="email" label="Email" variant="standard" />
             <TextField {...register('name')} type="text" label="Name" variant="standard" />
             <TextField {...register('surname')} type="text" label="Surname" variant="standard" />
+            <TextField {...register('phone')} type="text" label="Phone" variant="standard" />
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
               <LoadingButton type="submit" variant="contained" loading={request.isLoading}>
                 Update profile

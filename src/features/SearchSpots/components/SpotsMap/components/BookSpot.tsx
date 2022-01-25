@@ -164,6 +164,7 @@ export const BookSpot = ({ parkingSpot, open, handleClose }: Props) => {
                 <p>Name: {parkingSpot.user?.name}</p>
                 <p>Surname: {parkingSpot.user?.surname}</p>
                 <p>Email: {parkingSpot.user?.email}</p>
+                <p>Phone: {parkingSpot.user?.phone}</p>
               </>
             )}
           </>

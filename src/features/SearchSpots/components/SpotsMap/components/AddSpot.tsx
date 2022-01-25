@@ -9,6 +9,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import styled from '@xstyled/styled-components';
 import { api } from 'api';
 import { useParkingSpots } from 'features/SearchSpots/context/ParkingSpots.context';
+import { useAuth } from 'contexts';
 
 interface Props {
   position: Position;
@@ -20,11 +21,13 @@ export const AddSpot = ({ open, handleClose, position }: Props) => {
   const { register, handleSubmit } = useForm<ParkingSpotDTO>({ defaultValues: { position } });
   const request = useApiRequest();
   const { reloadParkingSpots } = useParkingSpots();
+  const { reloadUser } = useAuth();
 
   const onSubmit = handleSubmit(async (data) => {
     await request.dispatch(api.createParkingSpot(data));
     handleClose();
     reloadParkingSpots();
+    reloadUser();
   });
 
   return (
