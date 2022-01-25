@@ -3,10 +3,11 @@ import { User, Car } from '.';
 
 export interface ParkingSpot {
   id: string;
-  dateStart: Date;
-  dateEnd?: Date;
+  dateStart?: Date;
+  dateTo?: Date;
   position: Position;
   allowContact: boolean;
-  user: User;
-  car: Car;
+  user?: User;
+  car?: Car;
+  spotBusy?: boolean;
 }

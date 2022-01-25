@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { api } from 'api';
 import { ParkingSpot } from 'api/models';
-import { SpotsMap } from 'components/SpotsMap/SpotsMap';
-import useApiRequest from 'hooks/useApiRequest';
-
-import { SpotsList } from 'components/SpotsList';
+import { ParkingSpotsProvider } from 'features/SearchSpots/context/ParkingSpots.context';
 import { ContentContainer } from 'layout/ContentContainer';
+import React, { useState } from 'react';
+import { SpotsList, SpotsMap } from './components';
 
 export const SearchSpots = () => {
+  const [activeAddress, setActiveAddress] = useState<ParkingSpot | null>(null);
   return (
     <ContentContainer style={{ display: 'flex' }}>
-      <SpotsList />
-      <SpotsMap />
+      <ParkingSpotsProvider>
+        <SpotsList activeAddress={activeAddress} setActiveAddress={setActiveAddress} />
+        <SpotsMap activeAddress={activeAddress} setActiveAddress={setActiveAddress} />
+      </ParkingSpotsProvider>
     </ContentContainer>
   );
 };

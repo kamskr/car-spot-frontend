@@ -25,15 +25,17 @@ export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
       type: SET_IS_LOADING,
       payload: false,
     });
+    setTimeout(() => {
+      setIsInitialized(true);
+    }, 0);
   };
 
   const checkAuthentication = async () => {
     const { token } = getAuthTokens();
 
     if (token && isTokenValid(token)) {
-      api.setAuthToken(token);
+      await api.setAuthToken(token);
       await dispatch(getUserData());
-      setIsInitialized(true);
     } else {
       setIsInitialized(true);
     }
@@ -81,5 +83,5 @@ export const useAuthActions = (dispatch: Dispatch<SetStateAction<any>>) => {
     checkAuthentication();
   }, []);
 
-  return { isInitialized, register, login, logout, checkAuthentication };
+  return { isInitialized, register, login, logout, checkAuthentication, getUserData };
 };

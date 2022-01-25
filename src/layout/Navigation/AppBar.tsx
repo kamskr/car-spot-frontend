@@ -9,9 +9,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useAuth } from 'contexts';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { routes } from 'routes/routes';
-import { alignItems } from '@xstyled/styled-components';
 
 interface Props {
   openDrawer: () => void;
@@ -36,17 +35,15 @@ export const AppBar = ({ openDrawer }: Props) => {
           <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={openDrawer}>
             <MenuIcon />
           </IconButton>
+
           <Typography variant="h5" sx={{ flexGrow: 1 }}>
-            CarSpot
+            <Link to={routes.home} style={{ color: 'white', textDecoration: 'none' }}>
+              CarSpot
+            </Link>
           </Typography>
 
           {isAuthenticated ? (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              {user && (
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                  Hello {user.username}!
-                </Typography>
-              )}
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -72,7 +69,9 @@ export const AppBar = ({ openDrawer }: Props) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem component={NavLink} to={routes.profile}>
+                  Profile
+                </MenuItem>
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
             </div>

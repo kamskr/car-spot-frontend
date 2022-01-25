@@ -10,9 +10,9 @@ export const Bootstrap = ({ children }: Props) => {
   const { isLoaded: isGoogleMapsLoaded } = useGoogleMapsContext();
   const { isInitialized: isAuthenticationLoaded } = useAuth();
 
-  if (!(isGoogleMapsLoaded && isAuthenticationLoaded)) {
-    return <LoadingPage />;
+  if (isGoogleMapsLoaded && isAuthenticationLoaded) {
+    return <>{children}</>;
   }
 
-  return <>{children}</>;
+  return <LoadingPage />;
 };

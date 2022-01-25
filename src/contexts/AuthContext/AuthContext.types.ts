@@ -13,4 +13,5 @@ export interface AuthContextProps {
   login: (userCredentials: LoginUserDTO) => Promise<void>;
   register: (userCredentials: RegisterUserDTO) => Promise<void>;
   logout: () => Promise<void>;
+  reloadUser: () => void;
 }
