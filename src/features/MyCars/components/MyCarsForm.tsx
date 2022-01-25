@@ -1,8 +1,10 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Button, TextField, Typography } from '@mui/material';
 import styled from '@xstyled/styled-components';
+import { api } from 'api';
 import { Car } from 'api/models';
 import { CSModal } from 'components/CSModal';
+import { useAuth } from 'contexts';
 import useApiRequest from 'hooks/useApiRequest';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -14,9 +16,10 @@ interface Props {
 }
 
 export const MyCarsForm = ({ car, open, handleClose }: Props) => {
-  console.log(car);
+  const { reloadUser, user } = useAuth();
   const { register, handleSubmit } = useForm<Car>({
     defaultValues: {
+      user: user?.id || '',
       carBrand: car?.carBrand || '',
       model: car?.model || '',
       color: car?.color || '',
@@ -27,14 +30,19 @@ export const MyCarsForm = ({ car, open, handleClose }: Props) => {
   const request = useApiRequest();
 
   const onSubmit = handleSubmit(async (data) => {
-    // await request.dispatch(api.createParkingSpot(data));
-    console.log(data);
+    if (!car) {
+      await request.dispatch(api.createCar(data));
+    } else {
+      await request.dispatch(api.updateCar(car.id || '', data));
+    }
     handleClose();
-    // reloadParkingSpots();
+    reloadUser();
   });
 
-  const onDelete = () => {
-    console.log('delete');
+  const onDelete = async () => {
+    await request.dispatch(api.deleteCar(car?.id || ''));
+    handleClose();
+    reloadUser();
   };
 
   return (
@@ -57,7 +65,6 @@ export const MyCarsForm = ({ car, open, handleClose }: Props) => {
               Cancel
             </Button>
           )}
-
           <LoadingButton type="submit" variant="contained" loading={request.isLoading}>
             Add spot
           </LoadingButton>

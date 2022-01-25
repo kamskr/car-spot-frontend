@@ -1,4 +1,4 @@
-import { ParkingSpot, RegisterUserDTO, LoginUserDTO, AuthTokens, User, ParkingSpotDTO, UserDTO } from 'api/models';
+import { ParkingSpot, RegisterUserDTO, LoginUserDTO, AuthTokens, User, ParkingSpotDTO, UserDTO, Car } from 'api/models';
 import { ApiRoutes } from './ApiRoutes';
 import { CarSpotAPI, PaginatedData } from './ApiTypes';
 import { HttpClient } from './HttpClient';
@@ -79,5 +79,19 @@ export class Api implements CarSpotAPI {
   async updateParkingSpot(id: string, data: ParkingSpotDTO): Promise<ParkingSpot> {
     const res = await this.client.put(ApiRoutes.parkingSpotsIdRoute(id), data);
     return res.data;
+  }
+
+  async createCar(car: Car): Promise<Car> {
+    const res = await this.client.post(ApiRoutes.carsRoute, car);
+    return res.data;
+  }
+
+  async updateCar(id: string, car: Car): Promise<Car> {
+    const res = await this.client.put(ApiRoutes.carsIdRoute(id), car);
+    return res.data;
+  }
+
+  async deleteCar(id: string): Promise<void> {
+    const res = await this.client.delete(ApiRoutes.carsIdRoute(id));
   }
 }

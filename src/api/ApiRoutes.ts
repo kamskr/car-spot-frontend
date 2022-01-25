@@ -16,6 +16,8 @@ export class ApiRoutes {
   // cars
   static carsRoute = '/cars';
 
+  static carsIdRoute = (id: string) => `/cars/${id}`;
+
   // users
   static usersRoute = '/users';
 
