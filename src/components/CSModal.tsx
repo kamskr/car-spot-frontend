@@ -21,8 +21,13 @@ const ModalContent = styled(Box)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
+
   background: white;
   box-shadow: 24;
   padding: 20px;
+  width: 400px;
+  max-width: 100vw;
+  @media screen and (min-width: 800px) {
+    width: 600px;
+  }
 `;

@@ -61,6 +61,7 @@ const ProfileContent = styled(Card)`
   padding: 40px;
   background-color: red;
   margin-top: 20px;
+  max-width: 100vw;
 `;
 
 const Form = styled.form`
@@ -68,4 +69,5 @@ const Form = styled.form`
   flex-direction: column;
   gap: 20px;
   width: 500px;
+  max-width: 100vw;
 `;

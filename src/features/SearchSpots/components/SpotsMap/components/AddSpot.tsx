@@ -62,4 +62,5 @@ const Form = styled.form`
   flex-direction: column;
   gap: 20px;
   width: 500px;
+  max-width: 100vw;
 `;

@@ -21,4 +21,7 @@ const SideListContainer = styled.div`
   max-height: 100%;
   overflow-y: auto;
   padding: 10px 10px 0 10px;
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
 `;

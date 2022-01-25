@@ -44,11 +44,6 @@ export const AppBar = ({ openDrawer }: Props) => {
 
           {isAuthenticated ? (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              {user && (
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                  Hello {user.username}!
-                </Typography>
-              )}
               <IconButton
                 size="large"
                 aria-label="account of current user"

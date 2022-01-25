@@ -31,11 +31,15 @@ export const LoginForm = () => {
 const LoginFormContainer = styled(Card)`
   margin-top: 30px;
   padding: 30px;
+  max-width: 100vw;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 500px;
+  width: 200px;
+  @media screen and (min-width: 800px) {
+    width: 500px;
+  }
 `;

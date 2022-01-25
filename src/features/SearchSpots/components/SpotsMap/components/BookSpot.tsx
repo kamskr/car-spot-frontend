@@ -179,4 +179,5 @@ const Form = styled.form`
   gap: 20px;
   width: 500px;
   margin-top: 20px;
+  max-width: 100vw;
 `;
